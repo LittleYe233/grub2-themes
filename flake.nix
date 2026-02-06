@@ -1,5 +1,5 @@
 {
-  description = "Flake to manage grub2 themes from vinceliuice";
+  description = "Flake to manage grub2 themes from LittleYe233 (originally from vinceliuice)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/master";
@@ -22,10 +22,8 @@
           hasTerminalConfig = cfg.terminalConfig != null;
           resolutions = {
             "1080p" = "1920x1080";
-            "ultrawide" = "2560x1080";
             "2k" = "2560x1440";
             "4k" = "3840x2160";
-            "ultrawide2k" = "3440x1440";
           };
           grub2-theme = pkgs.stdenv.mkDerivation {
             name = "grub2-theme";
@@ -108,7 +106,7 @@
               screen = mkOption {
                 default = "1080p";
                 example = "1080p";
-                type = types.enum [ "1080p" "2k" "4k" "ultrawide" "ultrawide2k" ];
+                type = types.enum [ "1080p" "2k" "4k" ];
                 description = ''
                   The screen resolution to use for grub2.
                 '';
