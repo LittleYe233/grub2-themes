@@ -88,9 +88,9 @@
                 '';
               };
               theme = mkOption {
-                default = "tela";
-                example = "tela";
-                type = types.enum [ "tela" "vimix" "stylish" "whitesur" ];
+                default = "yuri1";
+                example = "yuri1";
+                type = types.enum [ "yuri1" "yuri2" ];
                 description = ''
                   The theme to use for grub2.
                 '';

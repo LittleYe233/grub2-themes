@@ -11,7 +11,7 @@ tui_root_login=
 THEME_DIR="/usr/share/grub/themes"
 REO_DIR="$(cd $(dirname $0) && pwd)"
 
-THEME_VARIANTS=('tela' 'vimix' 'stylish' 'whitesur')
+THEME_VARIANTS=('yuri1' 'yuri2')
 ICON_VARIANTS=('color' 'white' 'whitesur')
 SCREEN_VARIANTS=('1080p' '2k' '4k')
 custom_resolution=""
@@ -63,12 +63,11 @@ cat << EOF
 Usage: $0 [OPTION]...
 
 OPTIONS:
-  -t, --theme                 theme variant(s)          [tela|vimix|stylish|whitesur]       (default is tela)
+  -t, --theme                 theme variant(s)          [yuri1|yuri2]       (default is yuri1)
   -i, --icon                  icon variant(s)           [color|white|whitesur]              (default is color)
   -s, --screen                screen display variant(s) [1080p|2k|4k] (default is 1080p)
   -c, --custom-resolution     set custom resolution     (e.g., 1600x900)                    (disabled in default)
-  -r, --remove                remove theme              [tela|vimix|stylish|whitesur]       (must add theme name option, default is tela)
-
+  -r, --remove                remove theme              [yuri1|yuri2]       (must add theme name option, default is yuri1)
   -b, --boot                  install theme into '/boot/grub' or '/boot/grub2'
   -g, --generate              do not install but generate theme into chosen directory       (must add your directory)
 
@@ -348,15 +347,11 @@ run_dialog() {
 
     tui=$(dialog --backtitle ${Project_Name} \
     --radiolist "Choose your Grub theme background picture : " 15 40 5 \
-      1 "Vimix Theme" off  \
-      2 "Tela Theme" on \
-      3 "Stylish Theme" off  \
-      4 "WhiteSur Theme" off --output-fd 1 )
+      1 "Yuri1 Theme" on  \
+      2 "Yuri2 Theme" off --output-fd 1 )
       case "$tui" in
-        1) theme="vimix"      ;;
-        2) theme="tela"       ;;
-        3) theme="stylish"    ;;
-        4) theme="whitesur"   ;;
+        1) theme="yuri1"      ;;
+        2) theme="yuri2"      ;;
         *) operation_canceled ;;
      esac
 
@@ -580,20 +575,12 @@ while [[ $# -gt 0 ]]; do
       shift
       for theme in "${@}"; do
         case "${theme}" in
-          tela)
+          yuri1)
             themes+=("${THEME_VARIANTS[0]}")
             shift
             ;;
-          vimix)
+          yuri2)
             themes+=("${THEME_VARIANTS[1]}")
-            shift
-            ;;
-          stylish)
-            themes+=("${THEME_VARIANTS[2]}")
-            shift
-            ;;
-          whitesur)
-            themes+=("${THEME_VARIANTS[3]}")
             shift
             ;;
           -*)
@@ -621,20 +608,12 @@ while [[ $# -gt 0 ]]; do
       shift
       for theme in "${@}"; do
         case "${theme}" in
-          tela)
+          yuri1)
             themes+=("${THEME_VARIANTS[0]}")
             shift
             ;;
-          vimix)
+          yuri2)
             themes+=("${THEME_VARIANTS[1]}")
-            shift
-            ;;
-          stylish)
-            themes+=("${THEME_VARIANTS[2]}")
-            shift
-            ;;
-          whitesur)
-            themes+=("${THEME_VARIANTS[3]}")
             shift
             ;;
           -*)
