@@ -13,7 +13,7 @@ REO_DIR="$(cd $(dirname $0) && pwd)"
 
 THEME_VARIANTS=('tela' 'vimix' 'stylish' 'whitesur')
 ICON_VARIANTS=('color' 'white' 'whitesur')
-SCREEN_VARIANTS=('1080p' '2k' '4k' 'ultrawide' 'ultrawide2k')
+SCREEN_VARIANTS=('1080p' '2k' '4k')
 custom_resolution=""
 
 #################################
@@ -65,7 +65,7 @@ Usage: $0 [OPTION]...
 OPTIONS:
   -t, --theme                 theme variant(s)          [tela|vimix|stylish|whitesur]       (default is tela)
   -i, --icon                  icon variant(s)           [color|white|whitesur]              (default is color)
-  -s, --screen                screen display variant(s) [1080p|2k|4k|ultrawide|ultrawide2k] (default is 1080p)
+  -s, --screen                screen display variant(s) [1080p|2k|4k] (default is 1080p)
   -c, --custom-resolution     set custom resolution     (e.g., 1600x900)                    (disabled in default)
   -r, --remove                remove theme              [tela|vimix|stylish|whitesur]       (must add theme name option, default is tela)
 
@@ -151,14 +151,6 @@ generate() {
     cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-${icon}/icons-${asset_type}" "${THEME_DIR}/${theme}/icons"
     cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-select/select-${asset_type}/"*.png "${THEME_DIR}/${theme}"
     cp -a --no-preserve=ownership "${REO_DIR}/assets/info-${asset_type}.png" "${THEME_DIR}/${theme}/info.png"
-  elif [[ ${screen} == 'ultrawide' ]]; then
-    cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-${icon}/icons-1080p" "${THEME_DIR}/${theme}/icons"
-    cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-select/select-1080p/"*.png "${THEME_DIR}/${theme}"
-    cp -a --no-preserve=ownership "${REO_DIR}/assets/info-1080p.png" "${THEME_DIR}/${theme}/info.png"
-  elif [[ ${screen} == 'ultrawide2k' ]]; then
-    cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-${icon}/icons-2k" "${THEME_DIR}/${theme}/icons"
-    cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-select/select-2k/"*.png "${THEME_DIR}/${theme}"
-    cp -a --no-preserve=ownership "${REO_DIR}/assets/info-2k.png" "${THEME_DIR}/${theme}/info.png"
   else
     cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-${icon}/icons-${screen}" "${THEME_DIR}/${theme}/icons"
     cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-select/select-${screen}/"*.png "${THEME_DIR}/${theme}"
@@ -232,14 +224,10 @@ install() {
       gfxmode="GRUB_GFXMODE=${custom_resolution},auto"
     elif [[ ${screen} == '1080p' ]]; then
       gfxmode="GRUB_GFXMODE=1920x1080,auto"
-    elif [[ ${screen} == 'ultrawide' ]]; then
-      gfxmode="GRUB_GFXMODE=2560x1080,auto"
     elif [[ ${screen} == '4k' ]]; then
       gfxmode="GRUB_GFXMODE=3840x2160,auto"
     elif [[ ${screen} == '2k' ]]; then
       gfxmode="GRUB_GFXMODE=2560x1440,auto"
-    elif [[ ${screen} == 'ultrawide2k' ]]; then
-      gfxmode="GRUB_GFXMODE=3440x1440,auto"
     fi
 
     if grep "GRUB_GFXMODE=" /etc/default/grub 2>&1 >/dev/null; then
@@ -387,16 +375,12 @@ run_dialog() {
     tui=$(dialog --backtitle ${Project_Name} \
     --radiolist "Choose your Display Resolution : " 15 40 5 \
       1 "1080p (1920x1080)" on  \
-      2 "1080p ultrawide (2560x1080)" off  \
-      3 "2k (2560x1440)" off \
-      4 "4k (3840x2160)" off \
-      5 "1440p ultrawide (3440x1440)" off --output-fd 1 )
+      2 "2k (2560x1440)" off \
+      3 "4k (3840x2160)" off --output-fd 1 )
       case "$tui" in
         1) screen="1080p"       ;;
-        2) screen="ultrawide"   ;;
-        3) screen="2k"          ;;
-        4) screen="4k"          ;;
-        5) screen="ultrawide2k" ;;
+        2) screen="2k"          ;;
+        3) screen="4k"          ;;
         *) operation_canceled   ;;
      esac
 
@@ -705,14 +689,6 @@ while [[ $# -gt 0 ]]; do
             ;;
           4k)
             screens+=("${SCREEN_VARIANTS[2]}")
-            shift
-            ;;
-          ultrawide)
-            screens+=("${SCREEN_VARIANTS[3]}")
-            shift
-            ;;
-          ultrawide2k)
-            screens+=("${SCREEN_VARIANTS[4]}")
             shift
             ;;
           -*)
