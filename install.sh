@@ -149,10 +149,12 @@ generate() {
     asset_type=$(get_asset_type "$custom_resolution")
     cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-${icon}/icons-${asset_type}" "${THEME_DIR}/${theme}/icons"
     cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-select/select-${asset_type}/"*.png "${THEME_DIR}/${theme}"
+    cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-menu/menu-${asset_type}/"*.png "${THEME_DIR}/${theme}"
     cp -a --no-preserve=ownership "${REO_DIR}/assets/info-${asset_type}.png" "${THEME_DIR}/${theme}/info.png"
   else
     cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-${icon}/icons-${screen}" "${THEME_DIR}/${theme}/icons"
     cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-select/select-${screen}/"*.png "${THEME_DIR}/${theme}"
+    cp -a --no-preserve=ownership "${REO_DIR}/assets/assets-menu/menu-${screen}/"*.png "${THEME_DIR}/${theme}"
     cp -a --no-preserve=ownership "${REO_DIR}/assets/info-${screen}.png" "${THEME_DIR}/${theme}/info.png"
   fi
 }
